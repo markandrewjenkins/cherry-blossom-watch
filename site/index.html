@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script>
+    // Apply saved theme and design skin before first paint (?skin=alt|classic overrides and is remembered)
+    (function () { try { var r = document.documentElement, q = new URLSearchParams(location.search).get("skin");
+      var t = localStorage.getItem("odp-theme"); if (t) r.dataset.theme = t;
+      if (q) localStorage.setItem("odp-skin", q);
+      if ((q || localStorage.getItem("odp-skin")) === "alt") r.dataset.skin = "alt"; } catch (e) {} })();
+  </script>
+  <title>Blossom Watch</title>
+  <meta name="description" content="Cherry blossom forecasts for every public cherry and plum tree in Greater Victoria and Vancouver, plus the Cowichan Valley, Nanaimo and the Comox Valley — built from open government and citizen-science data." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;550;600;650;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=VT323&family=M+PLUS+1p:wght@400;500;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./src/shared/theme.css" />
+  <link rel="stylesheet" href="./src/blossom/blossom.css" />
+  <link rel="stylesheet" href="./src/blossom/skin.css" />
+</head>
+<body class="blossom">
+  <header class="topbar">
+    <span class="title">Blossom Watch</span>
+    <span class="spacer"></span>
+    <button class="skin-btn" id="skin" type="button" data-skin-name="Sakura.exe"></button>
+    <button class="icon-btn" id="theme" type="button"></button>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="wrap">
+        <div class="eyebrow" id="season-label">Spring forecast</div>
+        <h1 class="hero-title">When will the cherry blossoms peak?</h1>
+        <div class="controls-row region-row">
+          <div class="seg" id="regions" role="group" aria-label="Region"></div>
+        </div>
+        <div class="hero-grid">
+          <div class="hero-main card">
+            <div class="label" id="hero-label">Peak blossom</div>
+            <div class="hero-figure" id="hero-date">—</div>
+            <p class="hero-sub" id="hero-sub"></p>
+          </div>
+          <div class="grid cols-2 hero-stats" id="stats"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAP -->
+    <section class="block">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Every public tree</div>
+            <h2>Scrub through spring</h2>
+            <p>Each dot is a city-owned cherry or plum. Colour and size show the forecast chance that it's in bloom on the chosen date, given its cultivar and the season's weather so far.</p>
+          </div>
+        </div>
+        <div class="map-shell card">
+          <div class="map-toolbar">
+            <button class="play" id="play" type="button" aria-label="Play through the season">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg>
+            </button>
+            <div class="slider-wrap">
+              <div class="slider-date"><b id="slider-date">—</b> <span id="slider-note" class="note"></span></div>
+              <div id="ribbon" class="ribbon chart"></div>
+              <input type="range" id="slider" min="15" max="151" step="1" aria-label="Date" />
+            </div>
+          </div>
+          <div class="map-body">
+            <div id="map" class="map"></div>
+            <aside class="map-side">
+              <div class="side-block">
+                <div class="side-title">Colour trees by</div>
+                <div class="seg small" id="colour-by" role="group" aria-label="Colour trees by">
+                  <button type="button" data-v="bloom" aria-pressed="true">Bloom chance</button>
+                  <button type="button" data-v="tier" aria-pressed="false">Tier</button>
+                </div>
+              </div>
+              <div class="side-block" id="legend-bloom">
+                <div class="side-title">Bloom chance</div>
+                <div class="ramp" id="ramp"></div>
+                <div class="ramp-labels"><span>0%</span><span>50%</span><span>100%</span></div>
+              </div>
+              <div class="side-block" id="legend-tier" hidden>
+                <div class="side-title">Tier</div>
+                <div class="tier-legend" id="tier-legend"></div>
+              </div>
+              <div class="side-block">
+                <div class="side-title">Show tiers</div>
+                <div class="chips" id="tier-chips"></div>
+              </div>
+              <div class="side-block">
+                <div class="side-title">Tree groups</div>
+                <div class="chips" id="group-chips"></div>
+              </div>
+              <div class="side-block">
+                <div class="side-title">Trees</div>
+                <div id="tree-list"></div>
+              </div>
+              <div class="side-block">
+                <label class="toggle"><input type="checkbox" id="show-sightings" /> <span>iNaturalist sightings</span></label>
+              </div>
+              <div class="side-block streets">
+                <div class="side-title">Best streets on this date</div>
+                <ol id="streets"></ol>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIER LIST -->
+    <section class="block">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">The blossom tier list</div>
+            <h2>Which trees are worth the trip?</h2>
+            <p id="tiers-sub"></p>
+          </div>
+        </div>
+        <div class="tiers card" id="tiers"></div>
+        <p class="note" style="margin-top:8px">Tiers are my editorial ranking, based on flower size and form, colour, rarity on local streets, and how much of a crowd each cultivar draws. Photos show a typical tree of that cultivar in bloom, not the exact tree.</p>
+      </div>
+    </section>
+
+    <!-- CALENDAR + RACE -->
+    <section class="block">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Forecast</div>
+            <h2>The bloom calendar</h2>
+            <p>The forecast peak for each tree group, with 50% and 80% ranges. The ranges combine possible weather for the rest of the season with the model's own track record.</p>
+          </div>
+        </div>
+        <div class="grid cols-2">
+          <div class="card">
+            <h3 class="card-title" id="cal-title">Forecast peak by group</h3>
+            <div class="legend" id="cal-legend"></div>
+            <div class="chart" id="calendar"></div>
+            <details class="table-view"><summary>Table view</summary><div class="table-scroll" id="calendar-table"></div></details>
+          </div>
+          <div class="card">
+            <h3 class="card-title">The race to bloom</h3>
+            <p class="note card-sub" id="race-sub">Warmth accumulates from late winter. Blossoms open when it crosses the threshold.</p>
+            <div class="legend" id="race-legend"></div>
+            <div class="chart" id="race"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HISTORY -->
+    <section class="block">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">A century of springs</div>
+            <h2 id="history-title">Blossoms are arriving earlier</h2>
+            <p>The model replayed over every spring in the weather record, with the bloom dates observed on iNaturalist alongside for comparison.</p>
+          </div>
+          <div class="seg" id="history-groups" role="group" aria-label="Tree group"></div>
+        </div>
+        <div class="card">
+          <div class="legend" id="history-legend"></div>
+          <div class="chart" id="history"></div>
+          <p class="note" id="history-note"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODEL CARD -->
+    <section class="block">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Model card</div>
+            <h2>How good is the forecast?</h2>
+            <p>Every number below is out-of-sample. Each year is predicted by a model fitted without that year (leave-one-year-out cross-validation), and every forecast is compared with simply guessing the average date.</p>
+          </div>
+        </div>
+        <div class="grid cols-2">
+          <div class="card">
+            <h3 class="card-title">Model comparison</h3>
+            <p class="note card-sub">Cross-validated mean absolute error, in days. Lower is better; the chosen model is highlighted.</p>
+            <div class="table-scroll" id="cv-table"></div>
+          </div>
+          <div class="card">
+            <h3 class="card-title">Predicted vs observed</h3>
+            <p class="note card-sub">Each dot is one region and year, predicted without seeing that year.</p>
+            <div class="seg small" id="scatter-groups" role="group" aria-label="Tree group"></div>
+            <div class="chart" id="scatter"></div>
+          </div>
+        </div>
+        <div class="card" style="margin-top:16px">
+          <h3 class="card-title">Does the forecast sharpen as spring approaches?</h3>
+          <p class="note card-sub">Backtest: forecasts issued on each date using only the weather known by then. Bars show the average error in days; the label shows how often the actual date fell inside the 80% range (it should be close to 80%).</p>
+          <div class="grid cols-4" id="backtest"></div>
+        </div>
+        <div class="grid cols-2 method" style="margin-top:16px">
+          <div class="card prose">
+            <h3>Method</h3>
+            <p><b>Observed bloom dates.</b> For each region, tree group and year, I take the median date of iNaturalist observations of that species in its flowering window, excluding photos annotated as "no flowers". People photograph cherries when they're in bloom, so the median observation tracks peak bloom.</p>
+            <p><b>Weather.</b> Environment and Climate Change Canada daily temperatures. Each region's station chain is joined together after a month-by-month bias adjustment over the years the stations overlap. Greater Victoria runs from Gonzales Heights (1898) to Gonzales CS.</p>
+            <p><b>Models.</b> Each group is tested with four candidate models:</p>
+            <ul>
+              <li><b>Climatology:</b> the average bloom date for the region.</li>
+              <li><b>Thermal time:</b> bloom when growing degree-days above a base temperature reach a threshold.</li>
+              <li><b>Chill-adjusted thermal time:</b> as above, but warmer winters with less chill need more spring warmth.</li>
+              <li><b>Temperature-sensitivity regression:</b> bloom date regressed on the average temperature over a late-winter window.</li>
+            </ul>
+            <p>Parameters are pooled across regions, so the less-observed Island regions borrow strength from Victoria and Vancouver. The model with the lowest cross-validated error wins.</p>
+            <p><b>Forecasts.</b> Observed weather to date, followed by each of the last 30 years' weather for the rest of the season (an analog ensemble). The model's cross-validated errors are then added on, so the ranges reflect the model's real accuracy.</p>
+          </div>
+          <div class="card prose">
+            <h3>Honest limitations</h3>
+            <ul id="limitations"></ul>
+            <h3 style="margin-top:18px">Data sources</h3>
+            <ul class="sources">
+              <li><a href="https://opendata.vancouver.ca/explore/dataset/public-trees/">City of Vancouver — Public trees</a> (Open Government Licence – Vancouver)</li>
+              <li><a href="https://opendata.victoria.ca/">City of Victoria — Tree species (parks trees database)</a> (Open Government Licence – Victoria)</li>
+              <li><a href="https://gis.esquimalt.ca/arcgis/rest/services/Services/Trees/MapServer">Township of Esquimalt — public Tree Map service</a> (published for public use; no licence stated)</li>
+              <li><a href="https://api.weather.gc.ca/">Environment and Climate Change Canada — MSC GeoMet climate-daily</a> (Open Government Licence – Canada)</li>
+              <li><a href="https://www.inaturalist.org/">iNaturalist</a> community observations via the public API. Photos are shown only where the observer chose a Creative Commons licence, credited on each card</li>
+              <li>Cultivar photos from <a href="https://commons.wikimedia.org/">Wikimedia Commons</a> and iNaturalist under CC0, CC BY or CC BY-SA, with the photographer credited on each tree card</li>
+              <li>Basemap © <a href="https://openfreemap.org">OpenFreeMap</a>, © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a></li>
+            </ul>
+            <p class="note" id="generated"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site"><div class="wrap">Blossom Watch is part of an open-data portfolio. All data is free and open; the pipeline re-runs daily during the season.</div></footer>
+  <script type="module" src="./src/blossom/main.js"></script>
+</body>
+</html>

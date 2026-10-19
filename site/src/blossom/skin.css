@@ -1,0 +1,545 @@
+/* "Sakura.exe" design skin for this page. Every rule is scoped under :root[data-skin="alt"].
+   Concept: a 90s Japanese desktop. Day is a pale mint "desktop" with grey-lilac Windows 95 windows and
+   sakura-to-lavender title bars; night ("after hours") is a deep indigo desktop with magenta-to-cyan neon
+   title bars and a vaporwave sunset grid. */
+
+/* ---------- pixel art (data URIs) */
+:root[data-skin="alt"] {
+  --sk-btns-day: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='46' height='14' viewBox='0 0 46 14' shape-rendering='crispEdges'%3E%3Crect x='0' width='14' height='14' fill='%234a4060'/%3E%3Crect x='0' width='13' height='13' fill='%23ffffff'/%3E%3Crect x='1' y='1' width='12' height='12' fill='%239a90b0'/%3E%3Crect x='1' y='1' width='11' height='11' fill='%23ebe7f2'/%3E%3Crect x='16' width='14' height='14' fill='%234a4060'/%3E%3Crect x='16' width='13' height='13' fill='%23ffffff'/%3E%3Crect x='17' y='1' width='12' height='12' fill='%239a90b0'/%3E%3Crect x='17' y='1' width='11' height='11' fill='%23ebe7f2'/%3E%3Crect x='32' width='14' height='14' fill='%234a4060'/%3E%3Crect x='32' width='13' height='13' fill='%23ffffff'/%3E%3Crect x='33' y='1' width='12' height='12' fill='%239a90b0'/%3E%3Crect x='33' y='1' width='11' height='11' fill='%23ebe7f2'/%3E%3Crect x='3' y='9' width='6' height='2' fill='%232a1f3d'/%3E%3Cpath fill='%232a1f3d' d='M19 2h8v2h-8zM19 4h1v6h-1zM26 4h1v6h-1zM19 10h8v1h-8z'/%3E%3Cpath fill='%232a1f3d' d='M35 3h1v1h-1zM36 3h1v1h-1zM41 3h1v1h-1zM42 3h1v1h-1zM36 4h1v1h-1zM37 4h1v1h-1zM40 4h1v1h-1zM41 4h1v1h-1zM37 5h1v1h-1zM38 5h1v1h-1zM39 5h1v1h-1zM40 5h1v1h-1zM38 6h1v1h-1zM39 6h1v1h-1zM39 7h1v1h-1zM40 7h1v1h-1zM37 7h1v1h-1zM38 7h1v1h-1zM40 8h1v1h-1zM41 8h1v1h-1zM36 8h1v1h-1zM37 8h1v1h-1zM41 9h1v1h-1zM42 9h1v1h-1zM35 9h1v1h-1zM36 9h1v1h-1z'/%3E%3C/svg%3E");
+  --sk-btns-night: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='46' height='14' viewBox='0 0 46 14' shape-rendering='crispEdges'%3E%3Crect x='0' width='14' height='14' fill='%230c0816'/%3E%3Crect x='0' width='13' height='13' fill='%237262a0'/%3E%3Crect x='1' y='1' width='12' height='12' fill='%231b142e'/%3E%3Crect x='1' y='1' width='11' height='11' fill='%233a3058'/%3E%3Crect x='16' width='14' height='14' fill='%230c0816'/%3E%3Crect x='16' width='13' height='13' fill='%237262a0'/%3E%3Crect x='17' y='1' width='12' height='12' fill='%231b142e'/%3E%3Crect x='17' y='1' width='11' height='11' fill='%233a3058'/%3E%3Crect x='32' width='14' height='14' fill='%230c0816'/%3E%3Crect x='32' width='13' height='13' fill='%237262a0'/%3E%3Crect x='33' y='1' width='12' height='12' fill='%231b142e'/%3E%3Crect x='33' y='1' width='11' height='11' fill='%233a3058'/%3E%3Crect x='3' y='9' width='6' height='2' fill='%23f2ecff'/%3E%3Cpath fill='%23f2ecff' d='M19 2h8v2h-8zM19 4h1v6h-1zM26 4h1v6h-1zM19 10h8v1h-8z'/%3E%3Cpath fill='%23f2ecff' d='M35 3h1v1h-1zM36 3h1v1h-1zM41 3h1v1h-1zM42 3h1v1h-1zM36 4h1v1h-1zM37 4h1v1h-1zM40 4h1v1h-1zM41 4h1v1h-1zM37 5h1v1h-1zM38 5h1v1h-1zM39 5h1v1h-1zM40 5h1v1h-1zM38 6h1v1h-1zM39 6h1v1h-1zM39 7h1v1h-1zM40 7h1v1h-1zM37 7h1v1h-1zM38 7h1v1h-1zM40 8h1v1h-1zM41 8h1v1h-1zM36 8h1v1h-1zM37 8h1v1h-1zM41 9h1v1h-1zM42 9h1v1h-1zM35 9h1v1h-1zM36 9h1v1h-1z'/%3E%3C/svg%3E");
+  --sk-flower: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 11 11' shape-rendering='crispEdges'%3E%3Crect x='4' y='0' width='1' height='1' fill='%23f48fb8'/%3E%3Crect x='6' y='0' width='1' height='1' fill='%23f48fb8'/%3E%3Crect x='4' y='1' width='1' height='1' fill='%23f48fb8'/%3E%3Crect x='5' y='1' width='1' height='1' fill='%23f48fb8'/%3E%3Crect x='6' y='1' width='1' height='1' fill='%23f48fb8'/%3E%3Crect x='4' y='2' width='1' height='1' fill='%23f48fb8'/%3E%3Crect x='5' y='2' width='1' height='1' fill='%23f48fb8'/%3E%3Crect x='6' y='2' width='1' height='1' fill='%23f48fb8'/%3E%3Crect x='0' y='3' width='1' height='1' fill='%23f48fb8'/%3E%3Crect x='1' y='3' width='1' height='1' fill='%23f48fb8'/%3E%3Crect x='2' y='3' width='1' height='1' fill='%23f48fb8'/%3E%3Crect x='4' y='3' width='1' height='1' fill='%23ffd1e3'/%3E%3Crect x='5' y='3' width='1' height='1' fill='%23ffd1e3'/%3E%3Crect x='6' y='3' width='1' height='1' fill='%23ffd1e3'/%3E%3Crect x='8' y='3' width='1' height='1' fill='%23f48fb8'/%3E%3Crect x='9' y='3' width='1' height='1' fill='%23f48fb8'/%3E%3Crect x='10' y='3' width='1' height='1' fill='%23f48fb8'/%3E%3Crect x='1' y='4' width='1' height='1' fill='%23f48fb8'/%3E%3Crect x='2' y='4' width='1' height='1' fill='%23f48fb8'/%3E%3Crect x='3' y='4' width='1' height='1' fill='%23ffd1e3'/%3E%3Crect x='4' y='4' width='1' height='1' fill='%23ffd1e3'/%3E%3Crect x='5' y='4' width='1' height='1' fill='%23ffd1e3'/%3E%3Crect x='6' y='4' width='1' height='1' fill='%23ffd1e3'/%3E%3Crect x='7' y='4' width='1' height='1' fill='%23ffd1e3'/%3E%3Crect x='8' y='4' width='1' height='1' fill='%23f48fb8'/%3E%3Crect x='9' y='4' width='1' height='1' fill='%23f48fb8'/%3E%3Crect x='0' y='5' width='1' height='1' fill='%23f48fb8'/%3E%3Crect x='1' y='5' width='1' height='1' fill='%23f48fb8'/%3E%3Crect x='2' y='5' width='1' height='1' fill='%23f48fb8'/%3E%3Crect x='3' y='5' width='1' height='1' fill='%23ffd1e3'/%3E%3Crect x='4' y='5' width='1' height='1' fill='%23ffd1e3'/%3E%3Crect x='5' y='5' width='1' height='1' fill='%23c2185b'/%3E%3Crect x='6' y='5' width='1' height='1' fill='%23ffd1e3'/%3E%3Crect x='7' y='5' width='1' height='1' fill='%23ffd1e3'/%3E%3Crect x='8' y='5' width='1' height='1' fill='%23f48fb8'/%3E%3Crect x='9' y='5' width='1' height='1' fill='%23f48fb8'/%3E%3Crect x='10' y='5' width='1' height='1' fill='%23f48fb8'/%3E%3Crect x='3' y='6' width='1' height='1' fill='%23ffd1e3'/%3E%3Crect x='4' y='6' width='1' height='1' fill='%23ffd1e3'/%3E%3Crect x='5' y='6' width='1' height='1' fill='%23ffd1e3'/%3E%3Crect x='6' y='6' width='1' height='1' fill='%23ffd1e3'/%3E%3Crect x='7' y='6' width='1' height='1' fill='%23ffd1e3'/%3E%3Crect x='2' y='7' width='1' height='1' fill='%23f48fb8'/%3E%3Crect x='3' y='7' width='1' height='1' fill='%23f48fb8'/%3E%3Crect x='4' y='7' width='1' height='1' fill='%23ffd1e3'/%3E%3Crect x='5' y='7' width='1' height='1' fill='%23ffd1e3'/%3E%3Crect x='6' y='7' width='1' height='1' fill='%23ffd1e3'/%3E%3Crect x='7' y='7' width='1' height='1' fill='%23f48fb8'/%3E%3Crect x='8' y='7' width='1' height='1' fill='%23f48fb8'/%3E%3Crect x='2' y='8' width='1' height='1' fill='%23f48fb8'/%3E%3Crect x='3' y='8' width='1' height='1' fill='%23f48fb8'/%3E%3Crect x='4' y='8' width='1' height='1' fill='%23f48fb8'/%3E%3Crect x='6' y='8' width='1' height='1' fill='%23f48fb8'/%3E%3Crect x='7' y='8' width='1' height='1' fill='%23f48fb8'/%3E%3Crect x='8' y='8' width='1' height='1' fill='%23f48fb8'/%3E%3Crect x='3' y='9' width='1' height='1' fill='%23f48fb8'/%3E%3Crect x='4' y='9' width='1' height='1' fill='%23f48fb8'/%3E%3Crect x='6' y='9' width='1' height='1' fill='%23f48fb8'/%3E%3Crect x='7' y='9' width='1' height='1' fill='%23f48fb8'/%3E%3C/svg%3E");
+  --sk-petal-day: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 4' shape-rendering='crispEdges'%3E%3Crect x='1' y='0' width='1' height='1' fill='%23f4a6c6'/%3E%3Crect x='2' y='0' width='1' height='1' fill='%23f4a6c6'/%3E%3Crect x='0' y='1' width='1' height='1' fill='%23f4a6c6'/%3E%3Crect x='1' y='1' width='1' height='1' fill='%23f4a6c6'/%3E%3Crect x='2' y='1' width='1' height='1' fill='%23f4a6c6'/%3E%3Crect x='3' y='1' width='1' height='1' fill='%23f4a6c6'/%3E%3Crect x='0' y='2' width='1' height='1' fill='%23f4a6c6'/%3E%3Crect x='1' y='2' width='1' height='1' fill='%23f4a6c6'/%3E%3Crect x='2' y='2' width='1' height='1' fill='%23f4a6c6'/%3E%3Crect x='1' y='3' width='1' height='1' fill='%23f4a6c6'/%3E%3C/svg%3E");
+  --sk-petal-night: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 4' shape-rendering='crispEdges'%3E%3Crect x='1' y='0' width='1' height='1' fill='%23ff8cc0'/%3E%3Crect x='2' y='0' width='1' height='1' fill='%23ff8cc0'/%3E%3Crect x='0' y='1' width='1' height='1' fill='%23ff8cc0'/%3E%3Crect x='1' y='1' width='1' height='1' fill='%23ff8cc0'/%3E%3Crect x='2' y='1' width='1' height='1' fill='%23ff8cc0'/%3E%3Crect x='3' y='1' width='1' height='1' fill='%23ff8cc0'/%3E%3Crect x='0' y='2' width='1' height='1' fill='%23ff8cc0'/%3E%3Crect x='1' y='2' width='1' height='1' fill='%23ff8cc0'/%3E%3Crect x='2' y='2' width='1' height='1' fill='%23ff8cc0'/%3E%3Crect x='1' y='3' width='1' height='1' fill='%23ff8cc0'/%3E%3C/svg%3E");
+  --sk-check-day: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 9' shape-rendering='crispEdges'%3E%3Cpath fill='%23221a33' d='M7 1h1v3h-1zM6 2h1v3h-1zM5 3h1v3h-1zM4 4h1v3h-1zM3 5h1v3h-1zM2 4h1v3h-1zM1 3h1v3h-1z'/%3E%3C/svg%3E");
+  --sk-check-night: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 9' shape-rendering='crispEdges'%3E%3Cpath fill='%23f2ecff' d='M7 1h1v3h-1zM6 2h1v3h-1zM5 3h1v3h-1zM4 4h1v3h-1zM3 5h1v3h-1zM2 4h1v3h-1zM1 3h1v3h-1z'/%3E%3C/svg%3E");
+}
+
+/* ---------- tokens: day ("desktop") */
+:root[data-skin="alt"] {
+  --radius: 1px;
+  --font: "M PLUS 1p", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
+  --pixel: "DotGothic16", "MS Gothic", ui-monospace, monospace;
+  --vt: "VT323", "DotGothic16", ui-monospace, monospace;
+}
+:root[data-skin="alt"] body.blossom {
+  --page: #cfe6e1;
+  --surface: #e6e1ee;
+  --surface-2: #d9d2e6;
+  --field: #fbfaff;
+  --ink: #221a33;
+  --ink-2: #463d5c;
+  --muted: #5f5676;
+  --grid: #cfc7de;
+  --axis: #a69cbd;
+  --border: rgba(74, 64, 96, 0.28);
+  --shadow: 3px 3px 0 rgba(74, 52, 110, 0.14);
+  --accent: #c42a69;
+  --accent-2: #00777d;
+  --bev-hi: #ffffff;
+  --bev-lt: #f3f0f8;
+  --bev-sh: #9a90b0;
+  --bev-dk: #4a4060;
+  --tb-grad: linear-gradient(90deg, #f4b6cf, #d9b4e4 55%, #b9aef0);
+  --tb-ink: #2a1f3d;
+  --tb-shadow: 0 1px 0 rgba(255, 255, 255, 0.45);
+  --tb-btns: var(--sk-btns-day);
+  --sel: #6a5ab8;
+  --sel-ink: #ffffff;
+  --tip-bg: #ffffe1;
+  --tip-ink: #000000;
+  --tip-border: #000000;
+  --glow: 2px 2px 0 rgba(185, 174, 240, 0.75);
+  --glow-soft: none;
+  --rule: linear-gradient(90deg, #f4b6cf, #b9aef0 40%, #9fd8cf 70%, #f4b6cf);
+  --dither: rgba(255, 255, 255, 0.16);
+  --gridline: rgba(196, 120, 190, 0.32);
+  --floor: linear-gradient(180deg, rgba(185, 174, 240, 0.0), rgba(185, 174, 240, 0.16));
+  --sun: linear-gradient(180deg, #ffe7b8 0%, #f9c2d6 60%, #d9b8ef 100%);
+  --sun-op: 0.75;
+  --petal: var(--sk-petal-day);
+  --check: var(--sk-check-day);
+  --raised: inset 1px 1px var(--bev-lt), inset -1px -1px var(--bev-dk), inset 2px 2px var(--bev-hi), inset -2px -2px var(--bev-sh);
+  --sunken: inset 1px 1px var(--bev-sh), inset -1px -1px var(--bev-hi), inset 2px 2px var(--bev-dk), inset -2px -2px var(--bev-lt);
+  --shallow: inset 1px 1px var(--bev-sh), inset -1px -1px var(--bev-hi);
+  --pressed-bg: repeating-conic-gradient(var(--surface) 0 25%, var(--bev-hi) 0 50%) 0 0 / 2px 2px;
+  --tier-S: #ffb8d4; --tier-S-ink: #5a0f35;
+  --tier-A: #ffd2b5; --tier-A-ink: #5a2a10;
+  --tier-B: #fbeeac; --tier-B-ink: #4a3b06;
+  --tier-C: #bfeadb; --tier-C-ink: #0f4a36;
+  --tier-D: #d9d1f6; --tier-D-ink: #33285a;
+  background-color: var(--page);
+  background-image: repeating-conic-gradient(var(--dither) 0 25%, transparent 0 50%);
+  background-size: 4px 4px;
+  background-position: 0 0;
+  padding-bottom: 38px;   /* room for the taskbar */
+}
+
+/* ---------- tokens: night ("after hours") */
+@media (prefers-color-scheme: dark) {
+  :root[data-skin="alt"]:not([data-theme="light"]) body.blossom {
+    --page: #221a36; --surface: #2e2546; --surface-2: #3a3058; --field: #1a1429;
+    --ink: #f2ecff; --ink-2: #cdc3ea; --muted: #a89dcc; --grid: #3d3359; --axis: #5c4f85;
+    --border: rgba(200, 180, 255, 0.16); --shadow: 3px 3px 0 rgba(6, 3, 14, 0.45);
+    --accent: #ff6fae; --accent-2: #4fd6e3;
+    --bev-hi: #7262a0; --bev-lt: #4d4072; --bev-sh: #1b142e; --bev-dk: #0c0816;
+    --tb-grad: linear-gradient(90deg, #c2338f, #7a45c8 55%, #2a9fc0);
+    --tb-ink: #ffffff; --tb-shadow: 0 1px 2px rgba(20, 0, 30, 0.6);
+    --tb-btns: var(--sk-btns-night);
+    --sel: #ff6fae; --sel-ink: #1a0f24;
+    --tip-bg: #3b2f5c; --tip-ink: #f2ecff; --tip-border: #b9a3ff;
+    --glow: 0 0 6px rgba(255, 111, 174, 0.75), 0 0 18px rgba(255, 111, 174, 0.35);
+    --glow-soft: 0 0 14px rgba(255, 111, 174, 0.3);
+    --rule: linear-gradient(90deg, #ff4fa3, #9b5cff 45%, #3fd0e8 75%, #ff4fa3);
+    --dither: rgba(255, 255, 255, 0.022);
+    --gridline: rgba(255, 92, 170, 0.55);
+    --floor: linear-gradient(180deg, rgba(120, 40, 140, 0.0), rgba(120, 40, 140, 0.28));
+    --sun: linear-gradient(180deg, #ffd56b 0%, #ff8a7a 45%, #ff4fa3 100%);
+    --sun-op: 0.85;
+    --petal: var(--sk-petal-night);
+    --check: var(--sk-check-night);
+    --pressed-bg: repeating-conic-gradient(var(--surface) 0 25%, var(--surface-2) 0 50%) 0 0 / 2px 2px;
+    --tier-S: #4a2346; --tier-S-ink: #ff8cc4;
+    --tier-A: #4a2c36; --tier-A-ink: #ffb08f;
+    --tier-B: #433c30; --tier-B-ink: #ffe48a;
+    --tier-C: #1f4142; --tier-C-ink: #7eeacc;
+    --tier-D: #332d5e; --tier-D-ink: #c1b6ff;
+    --tier-glow: 0 0 10px currentColor;
+  }
+}
+:root[data-skin="alt"][data-theme="dark"] body.blossom {
+  --page: #221a36; --surface: #2e2546; --surface-2: #3a3058; --field: #1a1429;
+  --ink: #f2ecff; --ink-2: #cdc3ea; --muted: #a89dcc; --grid: #3d3359; --axis: #5c4f85;
+  --border: rgba(200, 180, 255, 0.16); --shadow: 3px 3px 0 rgba(6, 3, 14, 0.45);
+  --accent: #ff6fae; --accent-2: #4fd6e3;
+  --bev-hi: #7262a0; --bev-lt: #4d4072; --bev-sh: #1b142e; --bev-dk: #0c0816;
+  --tb-grad: linear-gradient(90deg, #c2338f, #7a45c8 55%, #2a9fc0);
+  --tb-ink: #ffffff; --tb-shadow: 0 1px 2px rgba(20, 0, 30, 0.6);
+  --tb-btns: var(--sk-btns-night);
+  --sel: #ff6fae; --sel-ink: #1a0f24;
+  --tip-bg: #3b2f5c; --tip-ink: #f2ecff; --tip-border: #b9a3ff;
+  --glow: 0 0 6px rgba(255, 111, 174, 0.75), 0 0 18px rgba(255, 111, 174, 0.35);
+  --glow-soft: 0 0 14px rgba(255, 111, 174, 0.3);
+  --rule: linear-gradient(90deg, #ff4fa3, #9b5cff 45%, #3fd0e8 75%, #ff4fa3);
+  --dither: rgba(255, 255, 255, 0.022);
+  --gridline: rgba(255, 92, 170, 0.55);
+  --floor: linear-gradient(180deg, rgba(120, 40, 140, 0.0), rgba(120, 40, 140, 0.28));
+  --sun: linear-gradient(180deg, #ffd56b 0%, #ff8a7a 45%, #ff4fa3 100%);
+  --sun-op: 0.85;
+  --petal: var(--sk-petal-night);
+  --check: var(--sk-check-night);
+  --pressed-bg: repeating-conic-gradient(var(--surface) 0 25%, var(--surface-2) 0 50%) 0 0 / 2px 2px;
+  --tier-S: #4a2346; --tier-S-ink: #ff8cc4;
+  --tier-A: #4a2c36; --tier-A-ink: #ffb08f;
+  --tier-B: #433c30; --tier-B-ink: #ffe48a;
+  --tier-C: #1f4142; --tier-C-ink: #7eeacc;
+  --tier-D: #332d5e; --tier-D-ink: #c1b6ff;
+  --tier-glow: 0 0 10px currentColor;
+}
+
+/* ---------- type */
+:root[data-skin="alt"] .blossom h1,
+:root[data-skin="alt"] .blossom h2,
+:root[data-skin="alt"] .blossom h3 { font-family: var(--pixel); font-weight: 400; letter-spacing: 0; }
+:root[data-skin="alt"] .blossom .eyebrow {
+  display: inline-block; font-family: var(--pixel); font-weight: 400; font-size: 12px; letter-spacing: 0.1em; color: var(--ink-2);
+}
+:root[data-skin="alt"] .blossom .section-head h2 { font-size: clamp(22px, 2.5vw, 28px); margin-top: 8px; }
+:root[data-skin="alt"] .blossom .sk-jp {
+  display: inline-flex; align-items: baseline; gap: 6px; margin-left: 12px; vertical-align: 0.2em;
+  padding: 2px 7px 1px; font: 400 13px/1.3 var(--pixel); letter-spacing: 0.04em; color: var(--ink-2);
+  background: var(--surface); box-shadow: var(--shallow);
+}
+:root[data-skin="alt"] .blossom .sk-jp small { font-size: 10.5px; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
+:root[data-skin="alt"] .blossom .sk-jp-hero { vertical-align: 0; margin-left: 10px; }
+:root[data-skin="alt"] .blossom .note { color: var(--muted); }
+:root[data-skin="alt"] .blossom :focus-visible { outline: 1px dotted var(--ink); outline-offset: 2px; }
+
+/* ---------- top bar: a Win95 menu bar with a gradient rule and a one-shot light sweep */
+:root[data-skin="alt"] body.blossom .topbar {
+  background: var(--surface); backdrop-filter: none; border-bottom: 0;
+  box-shadow: inset 0 1px var(--bev-hi), inset 0 -1px var(--bev-sh);
+  padding-top: 6px; padding-bottom: 6px; gap: 12px;
+}
+:root[data-skin="alt"] .blossom .topbar::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -3px; height: 3px; background: var(--rule); pointer-events: none;
+}
+:root[data-skin="alt"] .blossom .topbar::before {
+  content: ""; position: absolute; left: 0; bottom: -3px; width: 180px; height: 3px; z-index: 1; pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.95), transparent);
+  transform: translateX(-200px); animation: sk-sweep 1.8s cubic-bezier(.3, .1, .3, 1) .4s 1 backwards;
+}
+@keyframes sk-sweep { from { transform: translateX(-200px); opacity: 1; } 90% { opacity: 1; } to { transform: translateX(calc(100vw - 200px)); opacity: 0; } }
+:root[data-skin="alt"] .blossom .topbar .crumb { font: 400 13px var(--pixel); color: var(--ink-2); padding: 3px 6px; }
+:root[data-skin="alt"] .blossom .topbar .crumb:hover { background: var(--sel); color: var(--sel-ink); }
+:root[data-skin="alt"] .blossom .topbar .title { font: 400 14px var(--pixel); letter-spacing: 0.02em; min-width: 0; }
+:root[data-skin="alt"] .blossom .topbar .title::before {
+  content: ""; display: inline-block; width: 16px; height: 16px; margin-right: 7px; vertical-align: -3px; background: var(--sk-flower) center / contain no-repeat;
+}
+:root[data-skin="alt"] .blossom .topbar .title::after { content: ".exe"; color: var(--muted); }
+
+/* ---------- buttons (raised Win95 face, sunken when pressed) */
+:root[data-skin="alt"] .blossom .icon-btn,
+:root[data-skin="alt"] .blossom .skin-btn,
+:root[data-skin="alt"] .blossom .seg button,
+:root[data-skin="alt"] .blossom .chip,
+:root[data-skin="alt"] .blossom .play,
+:root[data-skin="alt"] .blossom .sk-taskbar button {
+  border: 0; border-radius: 0; background: var(--surface); color: var(--ink); box-shadow: var(--raised);
+  font-family: var(--pixel); font-weight: 400; cursor: pointer;
+}
+:root[data-skin="alt"] .blossom .icon-btn { width: 32px; height: 28px; }
+:root[data-skin="alt"] .blossom .skin-btn { height: 28px; font-size: 13px; padding: 0 12px; }
+:root[data-skin="alt"] .blossom .icon-btn:hover,
+:root[data-skin="alt"] .blossom .skin-btn:hover { background: var(--surface); color: var(--ink); }
+:root[data-skin="alt"] .blossom .icon-btn:active,
+:root[data-skin="alt"] .blossom .skin-btn:active,
+:root[data-skin="alt"] .blossom .seg button:active,
+:root[data-skin="alt"] .blossom .chip:active,
+:root[data-skin="alt"] .blossom .play:active,
+:root[data-skin="alt"] .blossom .sk-taskbar button:active { box-shadow: var(--sunken); }
+:root[data-skin="alt"] .blossom .skin-dot { border-radius: 0; }
+
+:root[data-skin="alt"] .blossom .seg { background: transparent; border: 0; padding: 0; gap: 3px; border-radius: 0; }
+:root[data-skin="alt"] .blossom .seg button { padding: 6px 12px 5px; font-size: 13px; color: var(--ink); }
+:root[data-skin="alt"] .blossom .seg.small button { padding: 4px 9px 3px; font-size: 12px; }
+:root[data-skin="alt"] .blossom .seg button[aria-pressed="true"],
+:root[data-skin="alt"] .blossom .chip[aria-pressed="true"] {
+  box-shadow: var(--sunken); background: var(--pressed-bg); color: var(--ink);
+}
+:root[data-skin="alt"] .blossom .seg button[aria-pressed="true"] { padding: 7px 11px 4px 13px; }
+:root[data-skin="alt"] .blossom .chip { padding: 5px 10px 4px 8px; font-size: 12px; color: var(--ink-2); }
+:root[data-skin="alt"] .blossom .chip[aria-pressed="false"] { opacity: 1; color: var(--muted); }
+:root[data-skin="alt"] .blossom .chip[aria-pressed="false"] .sw { filter: grayscale(1); opacity: 0.35 !important; }
+:root[data-skin="alt"] .blossom .chip .sw { border-radius: 0; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.25); }
+
+/* ---------- windows: every card is a Win95 window with a pastel title bar */
+:root[data-skin="alt"] .blossom .card {
+  position: relative; background: var(--surface); border: 0; border-radius: 0;
+  box-shadow: var(--raised), var(--shadow); padding: 36px 14px 14px;
+}
+:root[data-skin="alt"] .blossom .card::before {
+  content: var(--win-title, "untitled"); position: absolute; left: 3px; right: 3px; top: 3px; height: 22px;
+  padding: 0 60px 0 8px; background: var(--tb-grad); color: var(--tb-ink); text-shadow: var(--tb-shadow);
+  font: 400 13px/22px var(--pixel); letter-spacing: 0.03em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+:root[data-skin="alt"] .blossom .card::after {
+  content: ""; position: absolute; top: 7px; right: 6px; width: 46px; height: 14px; background: var(--tb-btns) no-repeat; pointer-events: none;
+}
+/* cards whose first child is a heading use the heading itself as the title bar */
+:root[data-skin="alt"] .blossom .card:has(> h3:first-child)::before { display: none; }
+:root[data-skin="alt"] .blossom .card > h3:first-child {
+  margin: -33px -11px 12px; padding: 3px 60px 3px 8px; min-height: 22px;
+  background: var(--tb-grad); color: var(--tb-ink); text-shadow: var(--tb-shadow);
+  font: 400 13px/16px var(--pixel); letter-spacing: 0.03em;
+}
+:root[data-skin="alt"] .blossom .card-title + .legend,
+:root[data-skin="alt"] .blossom .card-title + .card-sub { margin-top: 0; }
+:root[data-skin="alt"] .blossom .hero-main { --win-title: "満開.exe — peak bloom"; }
+:root[data-skin="alt"] .blossom .hero-stats .card:nth-child(1) { --win-title: "trees.dat"; }
+:root[data-skin="alt"] .blossom .hero-stats .card:nth-child(2) { --win-title: "warming.log"; }
+:root[data-skin="alt"] .blossom .hero-stats .card:nth-child(3) { --win-title: "accuracy.txt"; }
+:root[data-skin="alt"] .blossom .hero-stats .card:nth-child(4) { --win-title: "weather.db"; }
+:root[data-skin="alt"] .blossom .map-shell { --win-title: "花見マップ — hanami_map.exe"; }
+:root[data-skin="alt"] .blossom .tiers { --win-title: "C:\\SAKURA\\品種 — cultivars"; }
+:root[data-skin="alt"] .blossom .card:has(> #history-legend) { --win-title: "springs.log — 百年の春"; }
+
+/* ---------- KPI tiles and the hero */
+:root[data-skin="alt"] .blossom .hero {
+  position: relative; overflow: hidden; background: none; padding-bottom: 184px;
+}
+:root[data-skin="alt"] .blossom .hero > .wrap { position: relative; z-index: 2; }
+:root[data-skin="alt"] .blossom .hero-title { font-size: clamp(30px, 4.6vw, 52px); line-height: 1.2; margin: 10px 0 22px; max-width: 20ch; text-shadow: var(--glow-soft); }
+:root[data-skin="alt"] .blossom .hero-main { padding: 40px 22px 20px; gap: 6px; }
+:root[data-skin="alt"] .blossom .hero-main .label,
+:root[data-skin="alt"] .blossom .stat .label {
+  font: 400 12px var(--pixel); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2);
+}
+:root[data-skin="alt"] .blossom .hero-figure {
+  font-family: var(--vt); font-weight: 400; font-size: clamp(76px, 10vw, 124px); letter-spacing: 0.01em; line-height: 0.85;
+  color: var(--accent); text-shadow: var(--glow);
+}
+:root[data-skin="alt"] .blossom .hero-sub { font-size: 14.5px; }
+:root[data-skin="alt"] .blossom .hero-stats .card { padding: 34px 14px 12px; }
+:root[data-skin="alt"] .blossom .stat .value {
+  font-family: var(--vt); font-weight: 400; font-size: 40px; line-height: 1; letter-spacing: 0.01em; margin-top: 4px; color: var(--ink);
+}
+:root[data-skin="alt"] .blossom .hero-stats .card:nth-child(-n+3) .value { color: var(--accent); text-shadow: var(--glow); }
+:root[data-skin="alt"] .blossom .stat .sub { color: var(--muted); }
+
+/* the vaporwave horizon at the foot of the hero (DOM from skin.js) */
+:root[data-skin="alt"] .blossom .sk-horizon { position: absolute; left: 0; right: 0; bottom: 0; height: 184px; z-index: 0; pointer-events: none; }
+:root[data-skin="alt"] .blossom .sk-sun {
+  position: absolute; left: 68%; bottom: 104px; width: 150px; height: 75px; margin-left: -75px;
+  border-radius: 75px 75px 0 0; background: var(--sun); opacity: var(--sun-op);
+  -webkit-mask-image: linear-gradient(180deg, #000 0 40%, transparent 40% 47%, #000 47% 60%, transparent 60% 68%, #000 68% 78%, transparent 78% 87%, #000 87%);
+          mask-image: linear-gradient(180deg, #000 0 40%, transparent 40% 47%, #000 47% 60%, transparent 60% 68%, #000 68% 78%, transparent 78% 87%, #000 87%);
+}
+:root[data-skin="alt"] .blossom .sk-floor {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 104px; background: var(--floor);
+  border-top: 1px solid var(--gridline);
+  -webkit-mask-image: linear-gradient(180deg, #000 0, #000 70%, transparent);
+          mask-image: linear-gradient(180deg, #000 0, #000 70%, transparent);
+}
+:root[data-skin="alt"] .blossom .sk-floor svg { display: block; width: 100%; height: 100%; }
+:root[data-skin="alt"] .blossom .sk-floor line { stroke: var(--gridline); stroke-width: 1; vector-effect: non-scaling-stroke; }
+:root[data-skin="alt"] .blossom .sk-petals { position: absolute; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+:root[data-skin="alt"] .blossom .sk-petals i {
+  position: absolute; top: -12px; left: var(--x); width: var(--s, 8px); height: var(--s, 8px);
+  background: var(--petal) center / contain no-repeat; opacity: 0.75;
+  animation: sk-fall var(--d, 18s) linear var(--delay, 0s) infinite;
+}
+@keyframes sk-fall {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(22px, 25vh) rotate(90deg); }
+  50% { transform: translate(-8px, 50vh) rotate(180deg); }
+  75% { transform: translate(26px, 75vh) rotate(270deg); }
+  100% { transform: translate(4px, 102vh) rotate(360deg); }
+}
+
+/* ---------- map window */
+:root[data-skin="alt"] .blossom .map-shell { padding: 25px 3px 3px; overflow: visible; }
+:root[data-skin="alt"] .blossom .map-toolbar { border-bottom: 0; padding: 10px 12px 8px; gap: 12px; }
+:root[data-skin="alt"] .blossom .play { width: 38px; height: 34px; color: var(--accent); }
+:root[data-skin="alt"] .blossom .slider-date { font-family: var(--pixel); font-size: 14px; }
+:root[data-skin="alt"] .blossom .slider-date b { font-family: var(--vt); font-weight: 400; font-size: 22px; color: var(--accent); text-shadow: var(--glow); }
+:root[data-skin="alt"] .blossom .ribbon { background: var(--field); box-shadow: var(--sunken); }
+:root[data-skin="alt"] .blossom #slider { -webkit-appearance: none; appearance: none; height: 24px; background: transparent; cursor: pointer; }
+:root[data-skin="alt"] .blossom #slider::-webkit-slider-runnable-track { height: 4px; background: var(--field); box-shadow: var(--shallow), inset 1px 1px 0 1px var(--bev-dk); }
+:root[data-skin="alt"] .blossom #slider::-moz-range-track { height: 4px; background: var(--field); box-shadow: var(--shallow); }
+:root[data-skin="alt"] .blossom #slider::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 12px; height: 22px; margin-top: -9px; border: 0; border-radius: 0; background: var(--surface); box-shadow: var(--raised);
+}
+:root[data-skin="alt"] .blossom #slider::-moz-range-thumb { width: 12px; height: 22px; border: 0; border-radius: 0; background: var(--surface); box-shadow: var(--raised); }
+:root[data-skin="alt"] .blossom .map-body { gap: 0; }
+:root[data-skin="alt"] .blossom .map {
+  border: 2px solid; border-color: var(--bev-sh) var(--bev-hi) var(--bev-hi) var(--bev-sh); margin: 0 0 0 8px;
+  outline: 1px solid var(--bev-dk); outline-offset: -3px;
+}
+:root[data-skin="alt"] .blossom .map-side { border-left: 0; padding: 18px 12px 12px; gap: 20px; }
+:root[data-skin="alt"] .blossom .side-block {
+  position: relative; padding: 14px 10px 10px;
+  border: 1px solid var(--bev-sh); box-shadow: inset 1px 1px var(--bev-hi), 1px 1px var(--bev-hi);
+}
+:root[data-skin="alt"] .blossom .side-title {
+  position: absolute; top: -9px; left: 8px; margin: 0; padding: 0 5px; background: var(--surface);
+  font: 400 12px var(--pixel); letter-spacing: 0.06em; color: var(--ink);
+}
+:root[data-skin="alt"] .blossom .ramp {
+  height: 14px; border-radius: 0; box-shadow: var(--sunken);
+  background:
+    repeating-linear-gradient(90deg, transparent 0 10px, var(--surface) 10px 12px),
+    linear-gradient(90deg, var(--ramp-0), var(--ramp-1), var(--ramp-2), var(--ramp-3));
+}
+:root[data-skin="alt"] .blossom .ramp-labels { font-family: var(--mono); font-size: 10.5px; }
+:root[data-skin="alt"] .blossom .toggle { font-size: 13px; color: var(--ink); }
+:root[data-skin="alt"] .blossom .toggle input {
+  -webkit-appearance: none; appearance: none; width: 14px; height: 14px; margin: 0; flex: none; cursor: pointer;
+  background: var(--field) center / 9px 9px no-repeat; box-shadow: var(--sunken);
+}
+:root[data-skin="alt"] .blossom .toggle input:checked { background-image: var(--check); }
+:root[data-skin="alt"] .blossom .streets li button { border-radius: 0; padding: 5px 6px; color: var(--ink); }
+:root[data-skin="alt"] .blossom .streets li button:hover { background: var(--sel); color: var(--sel-ink); }
+:root[data-skin="alt"] .blossom .streets li button:hover .s-val { color: inherit; }
+:root[data-skin="alt"] .blossom .streets .s-val { font-family: var(--mono); font-size: 11px; }
+:root[data-skin="alt"] .blossom .streets .s-bar { height: 10px; border-radius: 0; background: var(--field); box-shadow: var(--shallow); padding: 2px; }
+:root[data-skin="alt"] .blossom .streets .s-bar i {
+  border-radius: 0; background: repeating-linear-gradient(90deg, var(--accent) 0 6px, transparent 6px 8px);
+}
+:root[data-skin="alt"] .blossom .map-empty,
+:root[data-skin="alt"] .blossom .tooltip {
+  border-radius: 0; background: var(--tip-bg); color: var(--tip-ink); border: 1px solid var(--tip-border);
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.18); font-size: 12.5px;
+}
+:root[data-skin="alt"] .blossom .maplibregl-ctrl-group {
+  border-radius: 0; background: var(--surface); box-shadow: var(--raised), var(--shadow); padding: 2px;
+}
+:root[data-skin="alt"] .blossom .maplibregl-ctrl-group button { border-radius: 0; background-color: var(--surface); }
+:root[data-skin="alt"] .blossom .maplibregl-ctrl-group button + button { border-top: 1px solid var(--bev-sh); }
+:root[data-skin="alt"] .blossom .maplibregl-ctrl-attrib { font-family: var(--pixel); font-size: 10.5px; }
+:root[data-skin="alt"] .blossom .maplibregl-ctrl-attrib.maplibregl-compact { background: var(--surface); color: var(--ink-2); border-radius: 0; box-shadow: var(--raised); }
+:root[data-skin="alt"] .blossom .maplibregl-ctrl-attrib a { color: inherit; }
+
+/* ---------- tooltips */
+:root[data-skin="alt"] .blossom .tooltip { padding: 5px 8px; font-family: var(--font); }
+:root[data-skin="alt"] .blossom .tooltip .t-title { font: 400 12px var(--pixel); letter-spacing: 0.03em; color: var(--tip-ink); opacity: 0.8; margin-bottom: 3px; }
+:root[data-skin="alt"] .blossom .tooltip .t-row b { font-family: var(--mono); font-weight: 600; font-size: 12px; }
+:root[data-skin="alt"] .blossom .tooltip .t-row span { color: var(--tip-ink); opacity: 0.8; }
+:root[data-skin="alt"] .blossom .tooltip .t-key { height: 3px; border-radius: 0; }
+
+/* tree profile: hover tooltip and pinned popup become small windows */
+:root[data-skin="alt"] .blossom .tooltip:has(.profile),
+:root[data-skin="alt"] .blossom .maplibregl-popup-content {
+  background: var(--surface) !important; color: var(--ink); border: 0; border-radius: 0 !important;
+  box-shadow: var(--raised), 3px 3px 0 rgba(20, 10, 40, 0.25) !important; padding: 3px !important;
+}
+:root[data-skin="alt"] .blossom .maplibregl-popup-tip { border-top-color: var(--bev-dk) !important; border-bottom-color: var(--bev-dk) !important; }
+:root[data-skin="alt"] .blossom .profile { width: 280px; }
+:root[data-skin="alt"] .blossom .profile::before {
+  content: "tree_profile.exe"; display: block; height: 20px; padding: 0 56px 0 7px; margin-bottom: 3px;
+  background: var(--tb-grad) ; color: var(--tb-ink); text-shadow: var(--tb-shadow); font: 400 12px/20px var(--pixel); letter-spacing: 0.03em;
+}
+:root[data-skin="alt"] .blossom .profile:not(:has(.tier))::before { content: "sighting.jpg — iNaturalist"; }
+:root[data-skin="alt"] .blossom .tooltip .profile { position: relative; }
+:root[data-skin="alt"] .blossom .tooltip .profile::after {
+  content: ""; position: absolute; top: 3px; right: 4px; width: 46px; height: 14px; background: var(--tb-btns) no-repeat; pointer-events: none;
+}
+:root[data-skin="alt"] .blossom .profile .pf-photo { box-shadow: var(--sunken); border: 2px solid transparent; }
+:root[data-skin="alt"] .blossom .profile .tier { border-radius: 0; font: 400 12px var(--pixel); box-shadow: var(--raised); padding: 3px 8px 2px; }
+:root[data-skin="alt"] .blossom .profile .pf-name { font: 400 16px var(--pixel); letter-spacing: 0.01em; }
+:root[data-skin="alt"] .blossom .profile .pf-prob b { font-family: var(--vt); font-weight: 400; font-size: 24px; color: var(--accent); text-shadow: var(--glow); }
+:root[data-skin="alt"] .blossom .profile .pf-attrs dt { font-family: var(--pixel); font-size: 11.5px; }
+:root[data-skin="alt"] .blossom .profile .pf-links a { color: var(--accent); }
+:root[data-skin="alt"] .blossom .maplibregl-popup-close-button {
+  top: 6px; right: 6px; width: 18px; height: 16px; padding: 0; line-height: 14px; font: 400 14px/14px var(--pixel);
+  color: var(--ink); background: var(--surface); box-shadow: var(--raised); border-radius: 0; z-index: 2;
+}
+:root[data-skin="alt"] .blossom .popup .p-big { font-family: var(--vt); font-weight: 400; font-size: 28px; }
+
+/* ---------- tier list: an Explorer window, tiers as pixel blocks, cultivars as large icons */
+:root[data-skin="alt"] .blossom .tiers { padding: 25px 3px 3px; overflow: hidden; }
+:root[data-skin="alt"] .blossom .tier-S { background: var(--tier-S); color: var(--tier-S-ink); }
+:root[data-skin="alt"] .blossom .tier-A { background: var(--tier-A); color: var(--tier-A-ink); }
+:root[data-skin="alt"] .blossom .tier-B { background: var(--tier-B); color: var(--tier-B-ink); }
+:root[data-skin="alt"] .blossom .tier-C { background: var(--tier-C); color: var(--tier-C-ink); }
+:root[data-skin="alt"] .blossom .tier-D { background: var(--tier-D); color: var(--tier-D-ink); }
+:root[data-skin="alt"] .blossom .tier-row { border-bottom: 0; background: var(--field); box-shadow: inset 0 -1px var(--grid); }
+:root[data-skin="alt"] .blossom .tier-row:first-child { box-shadow: inset 0 -1px var(--grid), inset 0 2px var(--bev-dk); }
+:root[data-skin="alt"] .blossom .tier-label { box-shadow: var(--raised); padding: 12px 8px; }
+:root[data-skin="alt"] .blossom .tier-label b { font: 400 56px/0.8 var(--vt); text-shadow: var(--tier-glow, none); }
+:root[data-skin="alt"] .blossom .tier-label span { font: 400 11.5px/1.3 var(--pixel); letter-spacing: 0.03em; opacity: 1; }
+:root[data-skin="alt"] .blossom .tier-items { gap: 6px 4px; padding: 10px; }
+:root[data-skin="alt"] .blossom .cv-card {
+  width: 148px; background: transparent; border: 0; border-radius: 0; padding: 4px 4px 6px; gap: 1px; color: var(--ink); transition: none;
+}
+:root[data-skin="alt"] .blossom .cv-card:hover { transform: none; box-shadow: none; }
+:root[data-skin="alt"] .blossom .cv-photo { height: 92px; margin-bottom: 5px; box-shadow: var(--shallow), inset 0 0 0 999px transparent; border: 1px solid var(--bev-sh); }
+:root[data-skin="alt"] .blossom .cv-card:hover .cv-photo,
+:root[data-skin="alt"] .blossom .cv-card:focus-visible .cv-photo { box-shadow: inset 0 0 0 999px color-mix(in oklab, var(--sel) 38%, transparent); }
+:root[data-skin="alt"] .blossom .cv-name { font: 400 13.5px/1.3 var(--pixel); padding: 1px 4px; align-self: flex-start; }
+:root[data-skin="alt"] .blossom .cv-card:hover .cv-name,
+:root[data-skin="alt"] .blossom .cv-card:focus-visible .cv-name { background: var(--sel); color: var(--sel-ink); outline: 1px dotted var(--sel-ink); outline-offset: -1px; }
+:root[data-skin="alt"] .blossom .cv-card:focus-visible { outline: 0; }
+:root[data-skin="alt"] .blossom .cv-meta,
+:root[data-skin="alt"] .blossom .cv-best,
+:root[data-skin="alt"] .blossom .cv-peak { padding: 0 4px; font-size: 11.5px; }
+:root[data-skin="alt"] .blossom .cv-peak { font-family: var(--mono); font-size: 10.5px; color: var(--accent); }
+:root[data-skin="alt"] .blossom .cv-similar { border-radius: 0; font-family: var(--pixel); background: rgba(20, 10, 40, 0.7); }
+
+/* ---------- charts, legends and tables */
+:root[data-skin="alt"] .blossom .chart .grid line { stroke-dasharray: 1 3; }
+:root[data-skin="alt"] .blossom .chart .axis text,
+:root[data-skin="alt"] .blossom .chart .tick text { font-family: var(--mono); font-size: 10.5px; }
+:root[data-skin="alt"] .blossom .chart .label.strong { font-family: var(--mono); font-size: 11.5px; font-weight: 600; }
+:root[data-skin="alt"] .blossom .legend { font-size: 12px; }
+:root[data-skin="alt"] .blossom .legend .dot,
+:root[data-skin="alt"] .blossom .legend .band,
+:root[data-skin="alt"] .blossom .legend .line { border-radius: 0; }
+:root[data-skin="alt"] .blossom #calendar circle { filter: drop-shadow(0 0 3px color-mix(in oklab, var(--accent) 60%, transparent)); }
+:root[data-skin="alt"] .blossom .table-scroll { background: var(--field); box-shadow: var(--sunken); padding: 2px; }
+:root[data-skin="alt"] .blossom .table-scroll > .note { padding: 0 8px 8px; }
+:root[data-skin="alt"] .blossom table.data { margin-top: 0; font-size: 12.5px; }
+:root[data-skin="alt"] .blossom table.data th {
+  background: var(--surface); box-shadow: var(--raised); border-bottom: 0; padding: 5px 8px 4px;
+  font: 400 12px var(--pixel); letter-spacing: 0.03em; color: var(--ink);
+}
+:root[data-skin="alt"] .blossom table.data td { border-bottom: 1px dotted var(--grid); padding: 5px 8px; }
+:root[data-skin="alt"] .blossom table.data td.num { font-family: var(--mono); font-size: 12px; }
+:root[data-skin="alt"] .blossom details.table-view summary { font-family: var(--pixel); font-size: 13px; }
+:root[data-skin="alt"] .blossom .bt-card { background: var(--field); box-shadow: var(--sunken); padding: 8px 10px 4px; }
+:root[data-skin="alt"] .blossom .bt-card .bt-title { font: 400 13px var(--pixel); }
+:root[data-skin="alt"] .blossom .prose h3:not(:first-child) { font-size: 16px; }
+:root[data-skin="alt"] .blossom .prose a { color: var(--accent); }
+
+/* ---------- footer */
+:root[data-skin="alt"] .blossom footer.site { padding: 40px 0 48px; }
+:root[data-skin="alt"] .blossom .sk-flavour { margin-top: 10px; font: 400 13px var(--pixel); color: var(--ink-2); letter-spacing: 0.02em; }
+:root[data-skin="alt"] .blossom .sk-flavour::before { content: "C:\\SAKURA> "; color: var(--accent); }
+
+/* ---------- the taskbar (DOM from skin.js) */
+:root[data-skin="alt"] .blossom .sk-taskbar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; height: 36px;
+  display: flex; align-items: center; gap: 4px; padding: 4px 4px 3px;
+  background: var(--surface); box-shadow: inset 0 1px var(--bev-lt), inset 0 2px var(--bev-hi), 0 -1px 0 var(--bev-sh);
+  font: 400 13px var(--pixel); color: var(--ink);
+}
+:root[data-skin="alt"] .blossom .sk-taskbar button { height: 28px; display: inline-flex; align-items: center; gap: 6px; padding: 0 10px; font-size: 13px; white-space: nowrap; }
+:root[data-skin="alt"] .blossom .sk-start { font-weight: 400; letter-spacing: 0.04em; padding: 0 9px 0 6px !important; }
+:root[data-skin="alt"] .blossom .sk-start[aria-expanded="true"] { box-shadow: var(--sunken) !important; background: var(--pressed-bg) !important; }
+:root[data-skin="alt"] .blossom .sk-flower { width: 16px; height: 16px; flex: none; background: var(--sk-flower) center / contain no-repeat; }
+:root[data-skin="alt"] .blossom .sk-sep { width: 2px; height: 26px; margin: 0 3px; box-shadow: inset 1px 0 var(--bev-sh), inset -1px 0 var(--bev-hi); flex: none; }
+:root[data-skin="alt"] .blossom .sk-tasks { display: flex; gap: 4px; min-width: 0; flex: 1; overflow: hidden; }
+:root[data-skin="alt"] .blossom .sk-tasks button { flex: 0 1 150px; min-width: 0; justify-content: flex-start; overflow: hidden; text-overflow: ellipsis; }
+:root[data-skin="alt"] .blossom .sk-tasks button[aria-current="true"] { box-shadow: var(--sunken); background: var(--pressed-bg); }
+:root[data-skin="alt"] .blossom .sk-tasks .sk-ico { width: 12px; height: 12px; flex: none; background: var(--tb-grad); box-shadow: inset 0 0 0 1px var(--bev-dk); }
+:root[data-skin="alt"] .blossom .sk-tray {
+  display: flex; align-items: center; gap: 10px; height: 28px; padding: 0 10px; margin-left: auto; flex: none;
+  box-shadow: var(--shallow); font-family: var(--mono); font-size: 12px; font-variant-numeric: tabular-nums;
+}
+:root[data-skin="alt"] .blossom .sk-tray .sk-peak { display: inline-flex; align-items: center; gap: 5px; font-family: var(--pixel); color: var(--ink-2); }
+:root[data-skin="alt"] .blossom .sk-tray .sk-peak i { width: 12px; height: 12px; background: var(--sk-flower) center / contain no-repeat; }
+:root[data-skin="alt"] .blossom .sk-menu {
+  position: fixed; left: 2px; bottom: 34px; z-index: 61; display: flex; min-width: 230px;
+  background: var(--surface); box-shadow: var(--raised), var(--shadow); padding: 3px;
+}
+:root[data-skin="alt"] .blossom .sk-menu[hidden] { display: none; }
+:root[data-skin="alt"] .blossom .sk-menu-strip {
+  width: 26px; flex: none; background: var(--tb-grad); background-size: 100% 100%;
+  background-image: linear-gradient(0deg, #f4b6cf, #b9aef0);
+  display: flex; align-items: flex-end; justify-content: center; padding-bottom: 8px;
+}
+:root[data-skin="alt"] .blossom .sk-menu-strip span {
+  writing-mode: vertical-rl; transform: rotate(180deg); font: 400 17px var(--pixel); color: var(--strip-95, #fff); letter-spacing: 0.04em;
+  text-shadow: 0 1px 2px rgba(60, 20, 80, 0.45);
+}
+:root[data-skin="alt"] .blossom .sk-menu-strip span b { font-weight: 400; color: var(--strip-b, #2a1f3d); text-shadow: var(--strip-b-shadow, none); }
+:root[data-skin="alt"] .blossom .sk-menu ul { list-style: none; margin: 0; padding: 2px 0; flex: 1; }
+:root[data-skin="alt"] .blossom .sk-menu li button {
+  width: 100%; display: flex; align-items: center; gap: 10px; padding: 7px 14px 6px 10px; border: 0; background: transparent;
+  font: 400 13.5px var(--pixel); color: var(--ink); text-align: left; cursor: pointer;
+}
+:root[data-skin="alt"] .blossom .sk-menu li button:hover,
+:root[data-skin="alt"] .blossom .sk-menu li button:focus-visible { background: var(--sel); color: var(--sel-ink); outline: 0; }
+:root[data-skin="alt"] .blossom .sk-menu li button small { margin-left: auto; color: inherit; opacity: 0.7; font-size: 11px; }
+:root[data-skin="alt"] .blossom .sk-menu .sk-mi { width: 14px; height: 14px; flex: none; background: var(--tb-grad); box-shadow: inset 0 0 0 1px var(--bev-dk); }
+:root[data-skin="alt"] .blossom .sk-menu hr { border: 0; height: 2px; margin: 3px 4px; box-shadow: inset 0 1px var(--bev-sh), inset 0 -1px var(--bev-hi); }
+
+/* night: maplibre control glyphs are dark SVGs, so flip them */
+@media (prefers-color-scheme: dark) {
+  :root[data-skin="alt"]:not([data-theme="light"]) .blossom :is(.maplibregl-ctrl-icon, .maplibregl-ctrl-attrib-button) { filter: invert(1) hue-rotate(180deg) brightness(1.1); }
+  :root[data-skin="alt"]:not([data-theme="light"]) .blossom .sk-menu-strip { background-image: linear-gradient(0deg, #c2338f, #2a9fc0); --strip-b: #fff; --strip-95: #ffd0e6; --strip-b-shadow: 0 1px 2px rgba(20, 0, 30, 0.6); }
+}
+:root[data-skin="alt"][data-theme="dark"] .blossom :is(.maplibregl-ctrl-icon, .maplibregl-ctrl-attrib-button) { filter: invert(1) hue-rotate(180deg) brightness(1.1); }
+:root[data-skin="alt"][data-theme="dark"] .blossom .sk-menu-strip { background-image: linear-gradient(0deg, #c2338f, #2a9fc0); --strip-b: #fff; --strip-95: #ffd0e6; --strip-b-shadow: 0 1px 2px rgba(20, 0, 30, 0.6); }
+
+/* ---------- mobile */
+@media (max-width: 860px) {
+  :root[data-skin="alt"] .blossom .map { margin: 0; }
+  :root[data-skin="alt"] .blossom .map-side { padding: 18px 10px 10px; }
+}
+@media (max-width: 640px) {
+  :root[data-skin="alt"] .blossom .card { padding: 34px 12px 12px; }
+  :root[data-skin="alt"] .blossom .card > h3:first-child { margin: -31px -9px 12px; }
+  :root[data-skin="alt"] .blossom .hero { padding-bottom: 128px; }
+  :root[data-skin="alt"] .blossom .sk-horizon { height: 128px; }
+  :root[data-skin="alt"] .blossom .sk-floor { height: 70px; }
+  :root[data-skin="alt"] .blossom .sk-sun { bottom: 70px; width: 100px; height: 50px; margin-left: -50px; left: 70%; }
+  :root[data-skin="alt"] .blossom .hero-main { padding: 36px 14px 16px; }
+  :root[data-skin="alt"] .blossom .sk-jp { margin-left: 0; margin-top: 6px; display: flex; width: max-content; max-width: 100%; }
+  :root[data-skin="alt"] .blossom .sk-jp-hero { display: inline-flex; margin-left: 8px; margin-top: 0; }
+  :root[data-skin="alt"] .blossom .tier-label b { font-size: 44px; }
+  :root[data-skin="alt"] .blossom .cv-card { width: calc(50% - 2px); }
+  :root[data-skin="alt"] .blossom .sk-tasks { display: none; }
+  :root[data-skin="alt"] .blossom .sk-tray .sk-peak { display: none; }
+  :root[data-skin="alt"] .blossom .topbar .title::after { content: none; }
+}
+@media (max-width: 520px) {
+  :root[data-skin="alt"] .blossom .topbar .title { font-size: 0; flex: none; }
+  :root[data-skin="alt"] .blossom .topbar .title::before { margin-right: 0; vertical-align: middle; }
+}
+
+/* ---------- motion */
+@media (prefers-reduced-motion: reduce) {
+  :root[data-skin="alt"] .blossom .sk-petals { display: none; }
+  :root[data-skin="alt"] .blossom .topbar::before { display: none; }
+}
