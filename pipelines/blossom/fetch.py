@@ -1,4 +1,4 @@
-"""Download raw inputs for Blossom Watch.
+"""Download raw inputs for Cherry Blossom Watch.
 
   python -m pipelines.blossom.fetch [trees|inat|weather|all]
 

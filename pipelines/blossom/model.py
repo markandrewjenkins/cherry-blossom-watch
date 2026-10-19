@@ -1,4 +1,4 @@
-"""Blossom Watch phenology model.
+"""Cherry Blossom Watch phenology model.
 
 Observed bloom index
     For each region × bloom group × year: the median day-of-year of iNaturalist observations

@@ -1,4 +1,4 @@
-"""Blossom Watch configuration: regions, weather station chains, taxa and cultivar mapping."""
+"""Cherry Blossom Watch configuration: regions, weather station chains, taxa and cultivar mapping."""
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]

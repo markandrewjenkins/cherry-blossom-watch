@@ -1,8 +1,8 @@
-# Blossom Watch
+# Cherry Blossom Watch
 
 Cherry blossom forecasts for every public tree, plus a cultivar tier list. Region: Greater Victoria, Vancouver Island, Vancouver.
 
-**Live dashboard: https://markandrewjenkins.github.io/blossom-watch/**
+**Live dashboard: https://markandrewjenkins.github.io/cherry-blossom-watch/**
 
 Built only on free, open government and citizen-science data. A Python pipeline fetches and models the data,
 and a static Vite + d3 + MapLibre page presents it. GitHub Actions refreshes everything daily and publishes it
