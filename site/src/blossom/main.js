@@ -3,6 +3,8 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import * as d3 from "d3";
 import { initTheme, initSkin, cssVar, tooltip, el, tipRow, loadJSON, fmtInt, treeList } from "../shared/ui.js";
 import "./skin.js";
+import { createPlanner } from "../shared/planner.js";
+import { fmtKm } from "../shared/route.js";
 
 const DATA = "./data/blossom/";
 const GROUP_ORDER = ["plum", "early", "yoshino", "japanese", "wild", "bitter"];
@@ -16,6 +18,7 @@ const tip = tooltip();
 
 const TIER_ORDER = ["S", "A", "B", "C", "D"];
 const PINNED = "yoshino";   // Somei-yoshino, Japan's reference hanami cherry, leads the S tier
+let trips = {}, planner;
 const state = { region: "victoria", doy: 90, cv: new Set(), colourBy: "bloom",
   historyGroup: "plum", scatterGroup: "plum", playing: false };
 let meta, forecast, history, backtest, trees, streets, sightings, cultivars, map;
@@ -91,6 +94,16 @@ async function init() {
   buildTierControls();
   buildHistoryButtons();
   initMap();
+  trips = await loadJSON(`${DATA}trips.json`).catch(() => ({}));
+  planner = createPlanner({
+    host: document.getElementById("planner"), map, title: "", scoreLabel: "Blossom", clickToAdd: false, initialMode: "foot",
+    graphUrl: (city, mode) => `${DATA}trip_${city}_${mode}.json`,
+    scoreFor: (G) => bloomEdges(G),
+    stopsFor: () => [],
+    presetsFor: (city, mode) => tripPresets(city, mode),
+    describe: (r, G) => { const [n, tot] = bloomAlong(G, r.steps); return [["🌸 Trees in bloom along the way", fmtInt.format(Math.round(n))], ["Cherries and plums passed", fmtInt.format(tot)]]; },
+    ignoreClicksOn: ["trees", "trees-icons", "sightings"],
+  });
   setRegion(state.region, { initial: true, date: hash.get("date") });
 
   const slider = document.getElementById("slider");
@@ -124,6 +137,7 @@ const allOn = (ids) => ids.length > 0 && ids.every((i) => state.cv.has(i));
 const groupOn = (g) => trees.cultivars.some((k, i) => cultivars[k].group === g && state.cv.has(i));
 let groupChips = [], tierChips = [], allChip, list;
 function syncFilters() {
+  replanSoon();
   groupChips.forEach(([g, chip]) => chip.setAttribute("aria-pressed", String(allOn(present((c) => c.group === g)))));
   const everything = allOn(present(() => true));
   allChip?.setAttribute("aria-pressed", String(everything));
@@ -230,6 +244,9 @@ function setRegion(key, { initial = false, date = null } = {}) {
   }
   renderHero(peak);
   renderTreeList();
+  const hasTrips = !!trips[key];
+  document.getElementById("planner-box").hidden = !hasTrips;
+  if (hasTrips && planner) planner.setCity(key);
   groupChips.forEach(([g, chip]) => chip.setAttribute("aria-pressed", String(allOn(present((c) => c.group === g)))));
   tierChips.forEach(([t, chip]) => chip.setAttribute("aria-pressed", String(allOn(present((c) => c.tier === t)))));
   allChip?.setAttribute("aria-pressed", String(allOn(present(() => true))));
@@ -252,6 +269,42 @@ function setDoy(doy) {
   renderStreets();
   renderRibbonPlayhead();
   renderCalendarPlayhead();
+  replanSoon();
+}
+let replanRaf;
+function replanSoon() { if (!planner?.graph) return; cancelAnimationFrame(replanRaf); replanRaf = requestAnimationFrame(() => planner.rescore()); }
+
+// ------------------------------------------------------------------ trip planner scoring
+// Each road segment carries the street trees beside it, by cultivar. On the chosen date a segment's value is the
+// number of selected trees likely in bloom per 100 m, squashed to 0–1.
+function bloomAlongEdge(G, e, probs) {
+  const sp = G.extra.sparse.trees;
+  let n = 0;
+  for (let k = sp.off[e]; k < sp.off[e + 1]; k++) if (state.cv.has(sp.id[k])) n += sp.n[k] * probs[sp.id[k]];
+  return n;
+}
+function cultivarProbs() {
+  const region = state.region;
+  return trees.cultivars.map((k) => bloomProb(region, cultivars[k].group, state.doy));
+}
+function bloomEdges(G) {
+  const probs = cultivarProbs(), s = new Float32Array(G.E);
+  for (let e = 0; e < G.E; e++) s[e] = 1 - Math.exp(-(bloomAlongEdge(G, e, probs) / Math.max(G.len[e], 30)) * 100 / 3);
+  return s;
+}
+function bloomAlong(G, steps) {
+  const probs = cultivarProbs(), sp = G.extra.sparse.trees;
+  let n = 0, tot = 0;
+  for (const [e] of steps) { n += bloomAlongEdge(G, e, probs); for (let k = sp.off[e]; k < sp.off[e + 1]; k++) if (state.cv.has(sp.id[k])) tot += sp.n[k]; }
+  return [n, tot];
+}
+function tripPresets(city, mode) {
+  const G = planner?.graph;
+  const list = (trips[city]?.presets || []).filter((p) => p.steps[mode]).map((p) => {
+    const n = G ? bloomAlong(G, p.steps[mode])[0] : 0;
+    return { id: p.id, name: p.name, waypoints: p.waypoints, steps: p.steps[mode], n };
+  }).sort((a, b) => b.n - a.n);
+  return list.map((p, i) => ({ ...p, tier: i === 0 && p.n >= 20 ? "S" : p.n >= 20 ? "A" : "B", meta: `${fmtInt.format(Math.round(p.n))} in bloom` }));
 }
 
 function history_replaceHash() {

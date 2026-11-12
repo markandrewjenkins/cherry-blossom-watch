@@ -186,3 +186,10 @@ body.blossom { --tier-map-S: #7d0f3d; --tier-map-A: #a81f52; --tier-map-B: #c052
 .tier-legend .tl-row { display: grid; grid-template-columns: 12px 16px 1fr; align-items: center; gap: 6px; font-size: 12px; color: var(--ink-2); }
 .tier-legend i { width: 10px; height: 10px; border-radius: 50%; }
 .tier-legend b { color: var(--ink); }
+
+/* trip planner in the map side panel */
+.planner-box > summary { cursor: pointer; list-style: none; font-size: 13px; color: var(--ink); }
+.planner-box > summary::-webkit-details-marker { display: none; }
+.planner-box .pl-title:empty { display: none; }
+.planner-box { border-bottom: 1px solid var(--border); padding-bottom: 12px; }
+body.blossom { --route: #2563eb; }

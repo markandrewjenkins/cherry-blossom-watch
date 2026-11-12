@@ -17,6 +17,7 @@ to GitHub Pages.
   - Japanese cherries borrow the best donor's temperature response, because their own index is too noisy to fit one.
 - **Forecast:** An analog-weather ensemble from the last 30 seasons combined with the model's cross-validated residuals. The resulting 80% intervals cover 78–88% of outcomes in backtests.
 - **Map modes:** colour trees by bloom chance (the default) or by cultivar tier (S–D, each tree icon lettered). Filter with a searchable checklist of individual cultivars, or with tier and group chips that tick or untick theirs. In the tier list, Somei-yoshino, Japan's reference hanami cherry, leads the S tier.
+- **Trip planner:** walk, bike or drive routes through the cherries in bloom on the chosen date. Each street tree is attached to its nearest road segment from OpenStreetMap (BBBike extracts). Routes favour segments with more selected cultivars in bloom per 100 m, and include a loop builder and GPX / Google Maps export. The ready-made routes run through the streets whose best ~600 m is most densely lined with S- and A-tier cherries.
 
 ## Design
 
@@ -29,6 +30,7 @@ button in the top bar or with `?skin=alt` / `?skin=classic` in the URL. Each has
 python -m venv .venv && .venv/Scripts/pip install -r requirements.txt   # macOS/Linux: .venv/bin/pip
 .venv/Scripts/python -m pipelines.blossom.fetch all
 .venv/Scripts/python -m pipelines.blossom.build
+.venv/Scripts/python -m pipelines.blossom.trips
 cd site && npm ci && npm run dev
 ```
 
